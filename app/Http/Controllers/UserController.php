@@ -86,4 +86,14 @@ public function store(Request $request)
      $user->delete();
      return redirect()->route('user.index')->with('success', 'User deleted successfully');
  }
+ public function updateProfile(Request $request)
+{
+    $user = Auth::user();
+    $user->name = $request->name;
+    $user->email = $request->email;
+    $user->save();
+
+    return redirect()->back()->with('success', 'Profile updated successfully.');
+}
+
 }

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Users')
+@section('title', 'Product')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -11,14 +11,14 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Users</h1>
+                <h1>Products</h1>
                 <div class="section-header-button">
-                    <a href="{{ route('user.create') }}" class="btn btn-primary">Add New</a>
+                    <a href="{{ route('product.create') }}" class="btn btn-primary">Add New</a>
                 </div>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="#">Users</a></div>
-                    <div class="breadcrumb-item">All Users</div>
+                    <div class="breadcrumb-item"><a href="#">Product</a></div>
+                    <div class="breadcrumb-item">All Product</div>
                 </div>
             </div>
             <div class="section-body">
@@ -27,8 +27,6 @@
                         @include('layouts.alert')
                     </div>
                 </div>
-
-
                 <div class="row mt-4">
                     <div class="col-12">
                         <div class="card">
@@ -36,7 +34,7 @@
                             <div class="card-body">
 
                                 <div class="float-right">
-                                    <form method="GET" action="{{ route('user.index') }}">
+                                    <form method="GET" action="{{ route('product.index') }}">
                                         <div class="input-group">
                                             <input type="text" class="form-control" placeholder="Search" name="name">
                                             <div class="input-group-append">
@@ -53,39 +51,46 @@
                                         <tr>
 
                                             <th>Name</th>
-                                            <th>Email</th>
-                                            <th>phone</th>
-                                            <th>roles</th>
+                                            <th>Category</th>
+                                            <th>Price</th>
+                                            <th>Stock</th>
+                                            <th>Photo</th>
                                             <th>Created At</th>
                                             <th>Action</th>
                                         </tr>
-                                        @foreach ($users as $user)
+                                        @foreach ($products as $product)
                                             <tr>
 
-                                                <td>{{ $user->name }}
+                                             <td>{{ $product->name }}
+                                                </td>
+                                                <td>{{ $product->category }}
+                                                </td>
+                                                <td>   {{ sprintf('Rp. %s', number_format($product->price)) }}
+                                                </td>
+                                                <td>{{ $product->stok }}
                                                 </td>
                                                 <td>
-                                                    {{ $user->email }}
-                                                </td>
-                                                <td>
-                                                    {{ $user->phone }}
-                                                </td>
-                                                <td>
-                                                    {{ $user->roles }}
+                                                    @if ($product->image)
+                                                    <img src="{{ asset('storage/products/'.$product->image) }}" alt=""
+                                                        width="100px" class="img-thumbnail">
+                                                        @else
+                                                        <span class="badge badge-danger">No Image</span>
+
+                                                @endif
+
                                                 </td>
 
-
-                                                <td>{{ $user->created_at }}</td>
+                                                <td>{{ $product->created_at }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        <a href='{{ route('user.edit', $user->id) }}'
+                                                        <a href='{{ route('product.edit', $product->id) }}'
                                                             class="btn btn-sm btn-info btn-icon">
                                                             <i class="fas fa-edit"></i>
                                                             Edit
                                                         </a>
 
-                                                        <form action="{{ route('user.destroy', $user->id) }}" method="POST"
-                                                            class="ml-2">
+                                                        <form action="{{ route('product.destroy', $product->id) }}"
+                                                            method="POST" class="ml-2">
                                                             <input type="hidden" name="_method" value="DELETE" />
                                                             <input type="hidden" name="_token"
                                                                 value="{{ csrf_token() }}" />
@@ -102,7 +107,7 @@
                                     </table>
                                 </div>
                                 <div class="float-right">
-                                    {{ $users->withQueryString()->links() }}
+                                    {{ $products->withQueryString()->links() }}
                                 </div>
                             </div>
                         </div>
