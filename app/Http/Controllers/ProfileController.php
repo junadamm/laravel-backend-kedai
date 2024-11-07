@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller{
     public function index(Request $request){
-        return view('pages.auth.profile.index');
+        return view('pages.profile.index');
     }
 }
 

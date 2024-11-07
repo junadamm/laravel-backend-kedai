@@ -79,15 +79,6 @@ class ProductController extends Controller
             'image' => $filename,
 
         ]);
-
-
-
-
-
-
-
-
-
         return redirect()->route('product.index')->with('success', 'Product successfully updated');
     }
 
